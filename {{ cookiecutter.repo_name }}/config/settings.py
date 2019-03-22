@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     {%- if cookiecutter.use_rest_framework == 'y' %}
     'rest_framework',
     {%- endif %}
-    '{{ cookiecutter.repo_name }}',
+    'apps.{{ cookiecutter.repo_name }}',
 ]
 
 MIDDLEWARE = [
@@ -62,7 +62,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = '{{ cookiecutter.repo_name }}.urls'
+ROOT_URLCONF = 'apps.urls'
 
 TEMPLATES = [
     {
@@ -80,7 +80,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = '{{ cookiecutter.repo_name }}.wsgi.application'
+WSGI_APPLICATION = 'apps.wsgi.application'
 
 
 # Database
@@ -126,8 +126,8 @@ LOGGING = {
     'disable_existing_loggers': False,
     'handlers': {
         'console': {
-            'level':'DEBUG',
-            'class':'logging.StreamHandler',
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
             'stream': sys.stdout,
         },
 {%- if cookiecutter.use_sentry == 'y' %}
@@ -168,8 +168,10 @@ RAVEN_CONFIG = {
 
 INTERNAL_IPS = []
 
+APPEND_SLASH = False
+
 if DEBUG:
-    import socket
+    import socket  # noqa: Z435
 
     INSTALLED_APPS += (
         'debug_toolbar',

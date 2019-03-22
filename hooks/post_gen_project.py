@@ -1,4 +1,5 @@
 import glob
+import os
 import random
 import shutil
 from pathlib import Path
@@ -33,6 +34,11 @@ def remove_recursively(pattern):
             shutil.rmtree(file)
 
 
+def initialize_git():
+    os.system('git init')
+    os.system('cp config/pre-commit .git/hooks/pre-commit')
+
+
 secret_key = generate_secret()
 password = generate_secret(length=16)
 
@@ -40,3 +46,5 @@ replace_string_recursively('[[ hooks.secret ]]', secret_key)
 replace_string_recursively('[[ hooks.password ]]', password)
 
 remove_recursively('[[ hooks.remove ]]')
+
+initialize_git()
